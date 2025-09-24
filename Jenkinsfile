@@ -7,13 +7,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main',
-                    url: 'https://github.com/sanjanaspp/my_web_app.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t $IMAGE_NAME .'
@@ -31,7 +24,7 @@ pipeline {
                 sh '''
                 docker stop $APP_NAME || true
                 docker rm $APP_NAME || true
-                docker run -d -p 8080:80 --name $APP_NAME $IMAGE_NAME
+                docker run -d -p 3000:80 --name $APP_NAME $IMAGE_NAME
                 '''
             }
         }
